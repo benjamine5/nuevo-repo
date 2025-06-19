@@ -1,35 +1,35 @@
 from sqlalchemy.orm import Session
 
-from ..models import Autor
+from ..models import Asociacion
 
 
 def create_autor(session: Session, nombre: str):
-    autor = Autor(nombre=nombre)
-    session.add(autor)
+    Asociacion = Asociacion(nombre=nombre)
+    session.add(Asociacion)
     session.commit()
-    return autor
+    return Asociacion
 
 
 def get_autores(session: Session):
-    return session.query(Autor).all()
+    return session.query(Asociacion).all()
 
 
 def get_autor(session: Session, autor_id: int):
-    return session.get(Autor, autor_id)
+    return session.get(Asociacion, autor_id)
 
 
 def update_autor(session: Session, autor_id: int, nombre: str):
-    autor = session.get(Autor, autor_id)
-    if autor:
-        autor.nombre = nombre
+    Asociacion = session.get(Asociacion, autor_id)
+    if Asociacion:
+        Asociacion.nombre = nombre
         session.commit()
-    return autor
+    return Asociacion
 
 
 def delete_autor(session: Session, autor_id: int):
-    autor = session.get(Autor, autor_id)
-    if autor:
-        session.delete(autor)
+    Asociacion = session.get(Asociacion, autor_id)
+    if Asociacion:
+        session.delete(Asociacion)
         session.commit()
-        return autor
+        return Asociacion
     return None
