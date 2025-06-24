@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 
 from ..db import get_db
-from ..cruds.Asociacion import (
+from ..cruds.autor import (
     create_autor,
     get_autor,
     get_autores,
@@ -16,34 +16,34 @@ router = APIRouter()
 @router.get("/")
 def get_autores_endpoint(session=Depends(get_db)):
     autores = get_autores(session)
-    return [{"id": Asociacion.id, "nombre": Asociacion.nombre} for Asociacion in autores]
+    return [{"id": autor.id, "nombre": autor.nombre} for autor in autores]
 
 
 @router.get("/{autor_id}")
 def get_autor_endpoint(autor_id: int, session=Depends(get_db)):
-    Asociacion = get_autor(session, autor_id)
-    if not Asociacion:
+    autor = get_autor(session, autor_id)
+    if not autor:
         raise HTTPException(status_code=404, detail="Autor not found")
-    return {"id": Asociacion.id, "nombre": Asociacion.nombre}
+    return {"id": autor.id, "nombre": autor.nombre}
 
 
 @router.post("/")
 def create_autor_endpoint(nombre: str, session=Depends(get_db)):
-    Asociacion = create_autor(session, nombre)
-    return {"id": Asociacion.id, "nombre": Asociacion.nombre}
+    autor = create_autor(session, nombre)
+    return {"id": autor.id, "nombre": autor.nombre}
 
 
 @router.put("/{autor_id}")
 def update_autor_endpoint(autor_id: int, nombre: str, session=Depends(get_db)):
-    Asociacion = update_autor(session, autor_id, nombre)
-    if not Asociacion:
+    autor = update_autor(session, autor_id, nombre)
+    if not autor:
         raise HTTPException(status_code=404, detail="Autor not found")
-    return {"id": Asociacion.id, "nombre": Asociacion.nombre}
+    return {"id": autor.id, "nombre": autor.nombre}
 
 
 @router.delete("/{autor_id}")
 def delete_autor_endpoint(autor_id: int, session=Depends(get_db)):
-    Asociacion = delete_autor(session, autor_id)
-    if not Asociacion:
+    autor = delete_autor(session, autor_id)
+    if not autor:
         raise HTTPException(status_code=404, detail="Autor not found")
     return {"detail": "Autor deleted successfully"}

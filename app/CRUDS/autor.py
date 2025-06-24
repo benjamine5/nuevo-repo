@@ -4,10 +4,10 @@ from ..models import Asociacion
 
 
 def create_autor(session: Session, nombre: str):
-    Asociacion = Asociacion(nombre=nombre)
-    session.add(Asociacion)
+    autor = Asociacion(nombre=nombre)
+    session.add(autor)
     session.commit()
-    return Asociacion
+    return autor
 
 
 def get_autores(session: Session):
@@ -19,17 +19,17 @@ def get_autor(session: Session, autor_id: int):
 
 
 def update_autor(session: Session, autor_id: int, nombre: str):
-    Asociacion = session.get(Asociacion, autor_id)
-    if Asociacion:
-        Asociacion.nombre = nombre
+    autor = session.get(Asociacion, autor_id)
+    if autor:
+        autor.nombre = nombre
         session.commit()
-    return Asociacion
+    return autor
 
 
 def delete_autor(session: Session, autor_id: int):
-    Asociacion = session.get(Asociacion, autor_id)
-    if Asociacion:
-        session.delete(Asociacion)
+    autor = session.get(Asociacion, autor_id)
+    if autor:
+        session.delete(autor)
         session.commit()
-        return Asociacion
+        return autor
     return None
