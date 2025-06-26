@@ -40,3 +40,4 @@ app.add_middleware(CORSMiddleware, **MIDDLEWARE_CONFIG)
 
 # Routers
 app.include_router(autor.router, prefix="/autor", tags=["Autor"])
+app.include_router(jugador.router, prefix="/jugador", tags=["jugador"])
