@@ -1,13 +1,13 @@
 from sqlalchemy.orm import Session
-from datetime import datetime
+from datetime import date
 from ..models import Jugador
 
 
-def create_jugador(session: Session, nombre:str, fecha_nacimiento: datetime, genero:str, pais:str, ciudad:str):
-    Jugador = Jugador(nombre=nombre, fecha_nacimiento = fecha_nacimiento, genero = genero, pais = pais, ciudad = ciudad)
-    session.add(Jugador)
+def create_jugador(session: Session, nombre:str, fecha_nacimiento: date, genero_jugador:str, pais_jugador:str, ciudad_jugador:str):
+    jugador = Jugador(nombre=nombre, fecha_nacimiento = fecha_nacimiento, genero_jugador = genero_jugador, pais_jugador = pais_jugador, ciudad_jugador = ciudad_jugador)
+    session.add(jugador)
     session.commit()
-    return Jugador
+    return jugador
 
 
 def get_jugadores(session: Session):
@@ -16,19 +16,22 @@ def get_jugadores(session: Session):
 def get_jugador(session: Session, Jugador_id: int):
     return session.get(Jugador, Jugador_id)
 
-def update_jugador(session: Session, jugador_id: int, nombre: str, pais: str):
-    Jugador = session.get(Jugador, jugador_id)
-    if Jugador:
-        Jugador.nombre = nombre
-        Jugador.pais = pais
-        session.commit
-    return Jugador
+def update_jugador(session: Session, jugador_id: int, nombre: str, fecha_nacimiento:date, genero_jugador:str, pais_jugador: str, ciudad_jugador:str):
+    jugador = session.get(Jugador, jugador_id)
+    if jugador:
+        jugador.nombre = nombre
+        jugador.fecha_nacimiento = fecha_nacimiento
+        jugador.genero_jugador = genero_jugador
+        jugador.pais_jugador = pais_jugador
+        jugador.ciudad_jugador = ciudad_jugador
+        session.commit()
+    return jugador
 
 def delete_jugador(session: Session, jugador_id: int):
-    Jugador = session.get(Jugador, jugador_id)
-    if Jugador:
-        session.delete(Jugador)
-        session.commit
-        return Jugador
+    jugador = session.get(Jugador, jugador_id)
+    if jugador:
+        session.delete(jugador)
+        session.commit()
+        return jugador
     return None
 
