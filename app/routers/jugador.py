@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends
 from ..db import get_db
-from ..cruds import (
+from ..cruds.jugador import (
     create_jugador,
     get_jugador,
     get_jugadores,
