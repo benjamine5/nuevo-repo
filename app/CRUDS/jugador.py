@@ -1,22 +1,22 @@
-from sqlalchemy.orm import session
+from sqlalchemy.orm import Session
 from datetime import datetime
 from ..models import Jugador
 
 
-def create_jugador(session: session, nombre:str, fecha_nacimiento: datetime, genero:str, pais:str, ciudad:str):
+def create_jugador(session: Session, nombre:str, fecha_nacimiento: datetime, genero:str, pais:str, ciudad:str):
     Jugador = Jugador(nombre=nombre, fecha_nacimiento = fecha_nacimiento, genero = genero, pais = pais, ciudad = ciudad)
     session.add(Jugador)
     session.commit()
     return Jugador
 
 
-def get_jugadores(session: session):
+def get_jugadores(session: Session):
     return session.query(Jugador).all()
 
-def get_jugador(session: session, Jugador_id: int):
+def get_jugador(session: Session, Jugador_id: int):
     return session.get(Jugador, Jugador_id)
 
-def update_jugador(session: session, jugador_id: int, nombre: str, pais: str):
+def update_jugador(session: Session, jugador_id: int, nombre: str, pais: str):
     Jugador = session.get(Jugador, jugador_id)
     if Jugador:
         Jugador.nombre = nombre
@@ -24,7 +24,7 @@ def update_jugador(session: session, jugador_id: int, nombre: str, pais: str):
         session.commit
     return Jugador
 
-def delete_jugador(session: session, jugador_id: int):
+def delete_jugador(session: Session, jugador_id: int):
     Jugador = session.get(Jugador, jugador_id)
     if Jugador:
         session.delete(Jugador)
