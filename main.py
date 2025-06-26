@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 
 from .app.routers import autor
+from .app.routers import jugador
 
 
 @asynccontextmanager
