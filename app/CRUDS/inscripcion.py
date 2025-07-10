@@ -3,8 +3,18 @@ from sqlalchemy.orm import Session
 from ..models import Inscripcion, Jugador
 
 def create_inscripcion(session: Session, equipo_id: int, jugador_id: int):
-    inscripcion = Inscripcion(equipo=equipo_id, jugador_id=jugador_id)
+    inscripcion = Inscripcion(equipo=equipo_id)
     session.add(inscripcion)
+    session.flush()
+
+    jugadores= [jugador_id]
+
+    if jugadores:
+        jugadores = session.query(Jugador).filter(Jugador.id.in_(jugadores)).all()
+        for jugador in jugadores:
+            jugador.inscripcion = jugador.id  # asignamos FK directamente
+        session.flush()
+
     session.commit()
     session.refresh(inscripcion)
     return inscripcion

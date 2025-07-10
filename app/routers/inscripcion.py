@@ -9,8 +9,7 @@ from ..cruds.inscripcion import (
     update_inscripcion,
     delete_inscripcion,
 )
-
-router = APIRouter(prefix="/inscripciones", tags=["Inscripciones"])
+router = APIRouter()
 
 @router.get("/")
 def get_inscripciones_endpoint(session=Depends(get_db)):
@@ -30,7 +29,7 @@ def get_inscripciones_endpoint(session=Depends(get_db)):
             "categorias": [
                 {
                     "id": c.id,
-                    "nombre": c.nombre,
+                    "nombre": c.genero_categoria,
                 } for c in i.categorias
             ] if i.categorias else [],
             "torneos": [
