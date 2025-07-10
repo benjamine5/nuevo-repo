@@ -1,8 +1,13 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Body
+from typing import List, Optional
+from pydantic import BaseModel
 from ..db import get_db
 from ..cruds.equipo import create_equipo, get_equipo, get_equipos, delete_equipo
 
 router = APIRouter()
+
+class EquipoCreate(BaseModel):
+    jugador_ids: Optional[List[int]] = []
 
 @router.get("/")
 def get_equipos_endpoint(session=Depends(get_db)):
@@ -29,12 +34,12 @@ def get_equipo_endpoint(equipo_id: int, session=Depends(get_db)):
 
 
 @router.post("/")
-def create_equipo_endpoint(session=Depends(get_db)):
-    equipo = create_equipo(session)
+def create_equipo_endpoint(equipo_data: EquipoCreate, session=Depends(get_db)):
+    equipo = create_equipo(session, jugador_ids=equipo_data.jugador_ids)
     return {
-    "id": equipo.id,
-    "jugadores": [jugador.id for jugador in equipo.jugadores]
-}
+        "id": equipo.id,
+        "jugadores": [jugador.id for jugador in equipo.jugadores]
+    }
 
 @router.delete("/{equipo_id}")
 def delete_equipo_endpoint(equipo_id: int, session=Depends(get_db)):

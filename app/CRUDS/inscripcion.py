@@ -1,9 +1,9 @@
 # CRUD: cruds/inscripcion.py
 from sqlalchemy.orm import Session
-from ..models import Inscripcion
+from ..models import Inscripcion, Jugador
 
-def create_inscripcion(session: Session, equipo_id: int):
-    inscripcion = Inscripcion(equipo=equipo_id)
+def create_inscripcion(session: Session, equipo_id: int, jugador_id: int):
+    inscripcion = Inscripcion(equipo=equipo_id, jugador_id=jugador_id)
     session.add(inscripcion)
     session.commit()
     session.refresh(inscripcion)
